@@ -1,0 +1,22 @@
+pm_api_url          = "{{ proxmox_url }}"
+pm_api_token_id     = "{{ api_token_id }}"
+pm_api_token_secret = "{{ api_token_secret }}"
+pm_node             = "{{ node }}"
+template_id         = {{ template_id }}
+network_bridge      = "{{ network_bridge }}"
+vm_gw               = "{{ vm_gw }}"
+vm_started          = false  # 全てのVMを停止状態で作成
+
+vms = {
+{% for p in profiles %}
+  "{{ p.profile }}" = {
+    vm_id     = {{ p.vm_id }}
+    vm_name   = "{{p.name}}"
+    storage   = "{{p.storage}}"
+    memory_mb = {{p.memory}}
+    disk_gb   = {{p.disk}}
+    vm_ip     = "{{p.ip}}"
+    started   = {{p.started}}
+  }
+{% endfor %}
+}
