@@ -16,7 +16,7 @@ vms = {
     memory_mb = {{p.memory}}
     disk_gb   = {{p.disk}}
     vm_ip     = "{{p.ip}}"
-    started   = {{p.started}}
+    started   = {{p.started | lower}}
   }
 {% endfor %}
 }

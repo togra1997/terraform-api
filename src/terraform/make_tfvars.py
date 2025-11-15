@@ -42,7 +42,7 @@ class TfvarsGenerator:
         )
         self.output = output
 
-    def save(self, output_folder: Path | str, profiles: list):
+    def save(self, profiles: list, output_folder: Path | str = Path("./src/terraform")):
         if not isinstance(output_folder, Path):
             output_folder = Path(output_folder)
         self._read_template()
@@ -56,17 +56,17 @@ class TfvarsGenerator:
 if __name__ == "__main__":
     generator = TfvarsGenerator("templates")
     generator.save(
-        Path("."),
         profiles=[
             {
                 "profile": "minecraft",
                 "vm_id": 150,
                 "name": "minecraft",
-                "storage": "sub-directory",
+                "storage": "local-lvm",
                 "memory": 16384,
                 "disk": 500,
-                "ip": "192.168.112.22",
+                "ip": "192.168.11.120",
                 "started": False,
             },
         ],
+        output_folder=Path("."),
     )

@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from src.api.shema.profiles import AddProfile, DeleteProfile
 from src.db import Database
 from src.terraform.make_tfvars import TfvarsGenerator
+from src.terraform.terraform import terraform_run
 
 router = APIRouter(prefix="/terraform")
 db = Database("db/save.csv")
@@ -33,5 +34,10 @@ def delete_profile(profile: DeleteProfile):
 @router.get("/run")
 def run_profile():
     profile = db.get()
-    output_path = "output"
-    tfvars_generator.save(output_path, profile)
+    tfvars_generator.save(profile)
+    terraform_run()
+
+
+@router.get("/info")
+def get_info():
+    return db.get()
