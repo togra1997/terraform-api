@@ -60,9 +60,9 @@ class Database:
         Raises:
             ValueError: 指定されたVM IDが存在しない場合。
         """
-        if vm_id not in self.df["vm_id"].to_numpy():
-            raise ValueError(f"VM ID {vm_id} does not exist in the database.")
-        self.df = self.df[self.df["vm_id"] != vm_id]
+        if vm_id not in self.df["id"].to_numpy():
+            raise ValueError(f"ID {vm_id} does not exist in the database.")
+        self.df = self.df[self.df["id"] != vm_id]
 
     def get(self) -> List[Any]:
         """
