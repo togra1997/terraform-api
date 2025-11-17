@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 
 from src.api.shema.profiles import AddProfile, DeleteProfile
-from src.databaes.db import Database
+from src.database.db import Database
 from src.terraform.make_tfvars import TfvarsGenerator
 from src.terraform.terraform import terraform_run
 
-router = APIRouter(prefix="/terraform")
+router = APIRouter(prefix="/terraform", tags=["terraform"])
 db = Database("./src/database/save.csv")
 tfvars_generator = TfvarsGenerator("src/terraform/templates")
 
