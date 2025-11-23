@@ -6,3 +6,4 @@ pandas
 uvicorn
 proxmoxer
 requests
+loguru

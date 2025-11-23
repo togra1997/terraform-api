@@ -1,4 +1,5 @@
 import os
+import sys
 
 import dotenv
 import uvicorn
@@ -6,6 +7,7 @@ from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from loguru import logger
 
 from src.api.endpoint.proxmox import router as proxmox_router
 from src.api.endpoint.terraform import router
@@ -13,6 +15,20 @@ from src.api.endpoint.terraform import router
 dotenv.load_dotenv()
 allow_origins = os.getenv("ALLOW_ORIGINS")
 
+logger.remove()  # デフォルトハンドラを削除
+logger.add(
+    sys.stdout,
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    level="INFO",
+)
+logger.add(
+    "logs/uvicorn_{time:YYYY-MM-DD}.log",
+    rotation="00:00",  # 毎日ローテーション
+    retention="30 days",  # 30日間保持
+    compression="zip",  # 古いログを圧縮
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
+    level="DEBUG",
+)
 
 app = FastAPI()
 app.include_router(router)
@@ -32,7 +48,11 @@ async def handler(request: Request, exc: RequestValidationError):
 
 
 def main():
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # logsディレクトリを作成
+    os.makedirs("logs", exist_ok=True)
+
+    logger.info("Starting uvicorn server...")
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info", access_log=True)
 
 
 if __name__ == "__main__":
