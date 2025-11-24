@@ -9,8 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from loguru import logger
 
-from src.api.endpoint.proxmox import router as proxmox_router
-from src.api.endpoint.terraform import router
+from src.api.endpoint.endpoint import router
 
 dotenv.load_dotenv()
 allow_origins = os.getenv("ALLOW_ORIGINS")
@@ -32,7 +31,6 @@ logger.add(
 
 app = FastAPI()
 app.include_router(router)
-app.include_router(proxmox_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[allow_origins],

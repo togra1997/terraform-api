@@ -5,12 +5,12 @@ from src.database.db import Database
 from src.terraform.make_tfvars import TfvarsGenerator
 from src.terraform.terraform import terraform_run
 
-router = APIRouter(prefix="/terraform", tags=["terraform"])
+terraform_router = APIRouter(prefix="/terraform", tags=["terraform"])
 db = Database("./src/database/save.csv")
 tfvars_generator = TfvarsGenerator("src/terraform/templates")
 
 
-@router.post("/add")
+@terraform_router.post("/add")
 def add_profile(profile: AddProfile):
     try:
         print(profile)
@@ -21,7 +21,7 @@ def add_profile(profile: AddProfile):
         return {"error": str(e)}
 
 
-@router.delete("/delete")
+@terraform_router.delete("/delete")
 def delete_profile(profile: DeleteProfile):
     try:
         db.delete(profile.id)
@@ -31,13 +31,13 @@ def delete_profile(profile: DeleteProfile):
         return {"error": str(e)}
 
 
-@router.get("/run")
+@terraform_router.get("/run")
 def run_profile():
     profile = db.get()
     tfvars_generator.save(profile)
     terraform_run()
 
 
-@router.get("/info")
+@terraform_router.get("/info")
 def get_info():
     return db.get()
