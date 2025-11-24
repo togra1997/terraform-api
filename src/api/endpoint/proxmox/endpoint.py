@@ -4,7 +4,7 @@ from fastapi import APIRouter
 
 from src.api.endpoint.proxmox import func as fc
 
-router = APIRouter(prefix="/proxmox", tags=["proxmox"])
+router = APIRouter(tags=["proxmox"])
 
 
 @router.get("/info")

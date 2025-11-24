@@ -5,7 +5,7 @@ from src.database.db import Database
 from src.terraform.make_tfvars import TfvarsGenerator
 from src.terraform.terraform import terraform_run
 
-terraform_router = APIRouter(prefix="/terraform", tags=["terraform"])
+terraform_router = APIRouter(tags=["terraform"])
 db = Database("./src/database/save.csv")
 tfvars_generator = TfvarsGenerator("src/terraform/templates")
 
