@@ -64,7 +64,6 @@ if __name__ == "__main__":
                 "storage": "local-lvm",
                 "memory": 16384,
                 "disk": 500,
-                "ip": "192.168.11.120",
                 "started": False,
             },
         ],

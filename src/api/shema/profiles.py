@@ -8,7 +8,6 @@ class AddProfile(BaseModel):
     storage: str
     memory: int
     disk: int
-    ip: str
     started: bool
 
     def get(self) -> dict:
@@ -19,7 +18,6 @@ class AddProfile(BaseModel):
             "storage": self.storage,
             "memory": self.memory,
             "disk": self.disk,
-            "ip": self.ip,
             "started": self.started,
         }
 

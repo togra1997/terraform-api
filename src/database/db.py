@@ -28,7 +28,6 @@ class Database:
                     "storage",
                     "memory",
                     "disk",
-                    "ip",
                     "started",
                 ]
             )
@@ -60,9 +59,10 @@ class Database:
         Raises:
             ValueError: 指定されたVM IDが存在しない場合。
         """
-        if vm_id not in self.df["id"].to_numpy():
+        print(self.df)
+        if vm_id not in self.df["vm_id"].to_numpy():
             raise ValueError(f"ID {vm_id} does not exist in the database.")
-        self.df = self.df[self.df["id"] != vm_id]
+        self.df = self.df[self.df["vm_id"] != vm_id]
 
     def get(self) -> List[Any]:
         """
@@ -96,10 +96,10 @@ if __name__ == "__main__":
             "storage": "sub-directory",
             "memory": 16384,
             "disk": 500,
-            "ip": "192.168.112.22",
             "started": False,
         }
     )
     print(db.get())
+    db.save()
     db.delete(150)
-    db.save(db_path)
+    db.save()

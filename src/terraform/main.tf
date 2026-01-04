@@ -22,7 +22,6 @@ variable "vms" {
     storage     = string
     memory_mb   = number
     disk_gb     = number
-    vm_ip       = string
     started     = optional(bool, false)  # VM毎の起動設定（デフォルト: false）
   }))
   default = {}
