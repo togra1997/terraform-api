@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 
@@ -29,6 +30,16 @@ logger.add(
     level="DEBUG",
 )
 
+
+class InterceptHandler(logging.Handler):
+    def emit(self, record):
+        # loguruのloggerに標準のloggingレコードを渡す
+        logger_opt = logger.opt(depth=6, exception=record.exc_info)
+        logger_opt.log(record.levelname, record.getMessage())
+
+
+logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
+
 app = FastAPI()
 app.include_router(router)
 app.add_middleware(
@@ -49,8 +60,13 @@ def main():
     # logsディレクトリを作成
     os.makedirs("logs", exist_ok=True)
 
-    logger.info("Starting uvicorn server...")
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info", access_log=True)
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=8000,
+        log_config=None,  # loguruで一元管理
+        log_level="info",
+    )
 
 
 if __name__ == "__main__":
