@@ -1,0 +1,20 @@
+services:
+  terraform-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: python api.py
+    ports:
+      - 8000:8000
+    environment:
+      - PROXMOX_URL=$PROXMOX_URL
+      - API_TOKEN_ID=$API_TOKEN_ID
+      - API_TOKEN_SECRET=$API_TOKEN_SECRET
+      - NODE=$NODE
+      - TEMPLATE_ID=$TEMPLATE_ID
+      - NETWORK_BRIDGE=$NETWORK_BRIDGE
+      - VM_GW=$VM_GW
+      - ALLOW_ORIGINS=$ALLOW_ORIGINS

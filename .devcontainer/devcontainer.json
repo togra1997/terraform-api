@@ -9,9 +9,10 @@
 		"vscode": {
 			// 拡張機能のインストール
 			"extensions": [
-				"usernamehw.errorlens", // ErrorLens
-				"ms-python.python", // Python拡張機能
-				"charliermarsh.ruff" // Ruff拡張機能
+				"usernamehw.errorlens",
+				"ms-python.python",
+				"charliermarsh.ruff",
+				"GitHub.vscode-github-actions"
 			],
 			// 拡張機能の設定
 			"settings": {
