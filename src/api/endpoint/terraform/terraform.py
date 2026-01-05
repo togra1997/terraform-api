@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from loguru import logger
 
 from src.api.shema.profiles import AddProfile, DeleteProfile
 from src.database.db import Database
@@ -13,12 +14,12 @@ tfvars_generator = TfvarsGenerator("src/terraform/templates")
 @terraform_router.post("/add")
 def add_profile(profile: AddProfile):
     try:
-        print(profile)
+        logger.info(profile)
         db.add(profile.get())
         db.save()
         return profile
     except Exception as e:
-        return {"error": str(e)}
+        return HTTPException(status_code=418, detail=str(e))
 
 
 @terraform_router.delete("/delete")
