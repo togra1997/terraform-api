@@ -17,6 +17,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v4
 
@@ -28,7 +29,7 @@ jobs:
     - name: Run server
       run: |
         cd ./cicd
-        docker compose up --build -d
+        USERID=$(id -u) GID=$(id -g) docker compose up --build -d
       env:
         PROXMOX_URL: ${{ secrets.PROXMOX_URL }}
         API_TOKEN_ID: ${{ secrets.API_TOKEN_ID }}
