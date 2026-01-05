@@ -19,7 +19,7 @@ def add_profile(profile: AddProfile):
         db.save()
         return profile
     except Exception as e:
-        return HTTPException(status_code=418, detail=str(e))
+        raise HTTPException(status_code=418, detail=str(e))
 
 
 @terraform_router.delete("/delete")

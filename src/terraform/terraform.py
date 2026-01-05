@@ -41,8 +41,8 @@ def terraform_run():
             logger.info(ret.stdout)
         if ret.stderr:
             logger.error(ret.stderr)
-    except subprocess.CalledProcessError as e:
-        print(f"An error occurred while running terraform: {e}")
+    except Exception as e:
+        logger.error(f"An error occurred while running terraform: {e}")
 
 
 if __name__ == "__main__":
