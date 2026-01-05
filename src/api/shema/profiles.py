@@ -20,7 +20,3 @@ class AddProfile(BaseModel):
             "disk": self.disk,
             "started": self.started,
         }
-
-
-class DeleteProfile(BaseModel):
-    id: int

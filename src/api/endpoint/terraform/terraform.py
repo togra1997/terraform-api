@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from loguru import logger
 
-from src.api.shema.profiles import AddProfile, DeleteProfile
+from src.api.shema.profiles import AddProfile
 from src.database.db import Database
 from src.terraform.make_tfvars import TfvarsGenerator
 from src.terraform.terraform import terraform_run
@@ -23,11 +23,11 @@ def add_profile(profile: AddProfile):
 
 
 @terraform_router.delete("/delete")
-def delete_profile(profile: DeleteProfile):
+def delete_profile(id: int):
     try:
-        db.delete(profile.id)
+        db.delete(id)
         db.save()
-        return profile
+        return "OK"
     except Exception as e:
         return {"error": str(e)}
 
